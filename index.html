@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>gifTastic!</h1>
+        <label for="search-field">Find a TV Show: </label>
+        <input type="text" id="search-field">
+        <input id="find-giphy" class="btn-primary" type="submit" value="giphy Search">
+        <div class="show-buttons"></div>
+        <div class="show-gifs"></div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var baseURL = "http://api.giphy.com/v1/gifs/search?q="
+        var apiKey = "Yz4pO4lJDaMYGIX80M9gc2Mq7HKKS2or"
+
+
+        $("#find-giphy").on("click", function () {
+            var input = $("#search-field").val();
+            var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response.data);
+                console.log(queryURL);
+                var results = response.data;
+
+                // create a button from the user input 
+                var button = $("<button>").text(input);
+
+                // add a bootstrap class
+                button.addClass("btn-primary");
+
+                // append to the DOM
+                $(".show-buttons").append(button)
+
+                // for each giphy result
+                for (i = 0; i < results.length; i++) {
+
+                    // create a new div 
+                    var showDiv = $("<div>");
+
+                    // display the rating 
+                    var rating = $("<p>").text("Rating: " + results[i].rating)
+
+                    // create image tag
+                    var image = $("<img>")
+                    // drill down in obj and find the image URL
+                    var imgURL = results[i].images.original.url
+                    // set attribute
+                    var showImage = image.attr("src", imgURL)
+
+                    //append to the DOM
+
+                    showDiv.append(showImage)
+                    showDiv.append(rating)
+                    $(".show-gifs").append(showDiv)
+                }
+            })
+        })
+
+        
+    </script>
+</body>
+
+</html>
