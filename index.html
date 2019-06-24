@@ -30,13 +30,13 @@
         var baseURL = "http://api.giphy.com/v1/gifs/search?q="
         var apiKey = "Yz4pO4lJDaMYGIX80M9gc2Mq7HKKS2or"
 
-        $("#find-giphy").on("click", function () {
-            var input = $("#search-field").val();
-            var button = $("<button>").text(input);
-            button.addClass("btn-primary");
-            topics.push(input)
-            $(".show-buttons").append(button);
-        })
+        // $("#find-giphy").on("click", function () {
+        //     var input = $("#search-field").val();
+        //     var button = $("<button>").text(input);
+        //     button.addClass("btn-primary");
+        //     topics.push(input)
+        //     $(".show-buttons").append(button);
+        // })
 
 
         for (var e = 0; e < topics.length; e++) {
@@ -89,32 +89,20 @@
 
                 // create a button from the user input 
                 var button = $("<button>").text(input);
-
                 // add a bootstrap class
                 button.addClass("btn-primary");
-
                 // append to the DOM
                 $(".show-buttons").append(button);
 
                 topics.push(input)
 
-                // for each giphy result
+               
                 for (i = 0; i < results.length; i++) {
-
-                    // create a new div 
                     var showDiv = $("<div>");
-
-                    // display the rating 
                     var rating = $("<p>").text("Rating: " + results[i].rating)
-
-                    // create image tag
                     var image = $("<img>")
-                    // drill down in obj and find the image URL
                     var imgURL = results[i].images.original.url
-                    // set attribute
                     var showImage = image.attr("src", imgURL)
-
-                    //append to the DOM
 
                     showDiv.append(showImage)
                     showDiv.append(rating)
