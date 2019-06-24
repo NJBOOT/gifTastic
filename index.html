@@ -76,52 +76,52 @@
 
 
 
-        // $("#find-giphy").on("click", function () {
-        //     var input = $("#search-field").val();
-        //     var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
-        //     $.ajax({
-        //         url: queryURL,
-        //         method: "GET"
-        //     }).then(function (response) {
-        //         console.log(response.data);
-        //         console.log(queryURL);
-        //         var results = response.data;
+        $("#find-giphy").on("click", function () {
+            var input = $("#search-field").val();
+            var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response.data);
+                console.log(queryURL);
+                var results = response.data;
 
-        //         // create a button from the user input 
-        //         var button = $("<button>").text(input);
+                // create a button from the user input 
+                var button = $("<button>").text(input);
 
-        //         // add a bootstrap class
-        //         button.addClass("btn-primary");
+                // add a bootstrap class
+                button.addClass("btn-primary");
 
-        //         // append to the DOM
-        //         $(".show-buttons").append(button);
+                // append to the DOM
+                $(".show-buttons").append(button);
 
-        //         topics.push(input)
+                topics.push(input)
 
-        //         // for each giphy result
-        //         for (i = 0; i < results.length; i++) {
+                // for each giphy result
+                for (i = 0; i < results.length; i++) {
 
-        //             // create a new div 
-        //             var showDiv = $("<div>");
+                    // create a new div 
+                    var showDiv = $("<div>");
 
-        //             // display the rating 
-        //             var rating = $("<p>").text("Rating: " + results[i].rating)
+                    // display the rating 
+                    var rating = $("<p>").text("Rating: " + results[i].rating)
 
-        //             // create image tag
-        //             var image = $("<img>")
-        //             // drill down in obj and find the image URL
-        //             var imgURL = results[i].images.original.url
-        //             // set attribute
-        //             var showImage = image.attr("src", imgURL)
+                    // create image tag
+                    var image = $("<img>")
+                    // drill down in obj and find the image URL
+                    var imgURL = results[i].images.original.url
+                    // set attribute
+                    var showImage = image.attr("src", imgURL)
 
-        //             //append to the DOM
+                    //append to the DOM
 
-        //             showDiv.append(showImage)
-        //             showDiv.append(rating)
-        //             $(".show-gifs").prepend(showDiv)
-        //         }
-        //     })
-        // })
+                    showDiv.append(showImage)
+                    showDiv.append(rating)
+                    $(".show-gifs").prepend(showDiv)
+                }
+            })
+        })
 
 
     </script>
