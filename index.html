@@ -18,7 +18,7 @@
         <input type="text" id="search-field">
         <input id="find-giphy" class="btn-primary" type="submit" value="giphy Search">
         <div class="show-buttons"></div>
-        <div class="show-gifs"></div>
+        <div class="show-gifs col-3"></div>
 
     </div>
 
@@ -30,14 +30,6 @@
         var baseURL = "http://api.giphy.com/v1/gifs/search?q="
         var apiKey = "Yz4pO4lJDaMYGIX80M9gc2Mq7HKKS2or"
 
-        // $("#find-giphy").on("click", function () {
-        //     var input = $("#search-field").val();
-        //     var button = $("<button>").text(input);
-        //     button.addClass("btn-primary");
-        //     topics.push(input)
-        //     $(".show-buttons").append(button);
-        // })
-
 
         for (var e = 0; e < topics.length; e++) {
             var button = $("<button>").text(topics[e]);
@@ -47,14 +39,11 @@
             button.on("click", function () {
                 $(".show-gifs").empty()
                 var input = $(this).html()
-                console.log(this)
                 var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
                 $.ajax({
                     url: queryURL,
                     method: "GET"
                 }).then(function (response) {
-                    console.log(response.data);
-                    console.log(queryURL);
                     var results = response.data;
 
                     for (i = 0; i < results.length; i++) {
@@ -96,17 +85,12 @@
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-                console.log(response.data);
-                console.log(queryURL);
                 var results = response.data;
-
-                // create a button from the user input 
                 var button = $("<button>").text(input);
-                // add a bootstrap class
                 button.addClass("btn-primary");
-                button.addClass("user-search");
-                // append to the DOM
+                button.addClass("user-search")
                 $(".show-buttons").append(button);
+
                 button.on("click", function () {
                     $(".show-gifs").empty()
                     var input = $(this).html()
@@ -120,7 +104,6 @@
                             var showDiv = $("<div>");
                             var rating = $("<p>").text("Rating: " + results[i].rating)
                             var image = $("<img>")
-                            var gif = $("<img>")
                             var imgURL = results[i].images.fixed_height_still.url
                             var gifURL = results[i].images.fixed_height.url
                             image.attr("src", imgURL)
@@ -144,9 +127,9 @@
                         };
                     });
                 })
-                // add input to the topics array
-                topics.push(input)
-                console.log(topics)
+                // // add input to the topics array
+                // topics.push(input)
+                // console.log(topics)
 
                 // for (i = 0; i < results.length; i++) {
                 //     var showDiv = $("<div>");
