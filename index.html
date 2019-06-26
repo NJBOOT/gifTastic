@@ -45,6 +45,7 @@
             $(".show-buttons").append(button);
 
             button.on("click", function () {
+                $(".show-gifs").empty()
                 var input = $(this).html()
                 console.log(this)
                 var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
@@ -61,23 +62,35 @@
                         var showDiv = $("<div>");
                         var rating = $("<p>").text("Rating: " + results[i].rating)
                         var image = $("<img>")
-                        var imgURL = results[i].images.original.url
-                        var showImage = image.attr("src", imgURL)
+                        var imgURL = results[i].images.fixed_height_still.url
+                        var gifURL = results[i].images.fixed_height.url
+                        image.attr("src", imgURL)
+                        image.attr("data-animate", gifURL)
+                        image.attr("data-still", imgURL)
+                        image.attr("data-state", "still")
 
-                        showDiv.append(showImage)
+                        image.on("click", function () {
+                            console.log(this)
+                            if ($(this).attr("data-state") === "still") {
+                                $(this).attr("src", $(this).attr("data-animate"));
+                                $(this).attr("data-state", "animate");
+                            } else {
+                                $(this).attr("src", $(this).attr("data-still"));
+                                $(this).attr("data-state", "still")
+                            }
+                        })
+                        showDiv.append(image)
                         showDiv.append(rating)
                         $(".show-gifs").prepend(showDiv)
                     }
+
                 });
             });
-
         }
-
-
-
-
         $("#find-giphy").on("click", function () {
+            $(".show-gifs").empty()
             var input = $("#search-field").val();
+
             var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
             $.ajax({
                 url: queryURL,
@@ -91,26 +104,78 @@
                 var button = $("<button>").text(input);
                 // add a bootstrap class
                 button.addClass("btn-primary");
+                button.addClass("user-search");
                 // append to the DOM
                 $(".show-buttons").append(button);
+                button.on("click", function () {
+                    $(".show-gifs").empty()
+                    var input = $(this).html()
+                    var queryURL = baseURL + input + "&api_key=" + apiKey + "&limit=10";
+                    $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    }).then(function (response) {
+                        var results = response.data;
+                        for (i = 0; i < results.length; i++) {
+                            var showDiv = $("<div>");
+                            var rating = $("<p>").text("Rating: " + results[i].rating)
+                            var image = $("<img>")
+                            var gif = $("<img>")
+                            var imgURL = results[i].images.fixed_height_still.url
+                            var gifURL = results[i].images.fixed_height.url
+                            image.attr("src", imgURL)
+                            image.attr("data-animate", gifURL)
+                            image.attr("data-still", imgURL)
+                            image.attr("data-state", "still")
 
+                            image.on("click", function () {
+                                console.log(this)
+                                if ($(this).attr("data-state") === "still") {
+                                    $(this).attr("src", $(this).attr("data-animate"));
+                                    $(this).attr("data-state", "animate");
+                                } else {
+                                    $(this).attr("src", $(this).attr("data-still"));
+                                    $(this).attr("data-state", "still")
+                                }
+                            })
+                            showDiv.append(image)
+                            showDiv.append(rating)
+                            $(".show-gifs").prepend(showDiv)
+                        };
+                    });
+                })
+                // add input to the topics array
                 topics.push(input)
+                console.log(topics)
 
-               
-                for (i = 0; i < results.length; i++) {
-                    var showDiv = $("<div>");
-                    var rating = $("<p>").text("Rating: " + results[i].rating)
-                    var image = $("<img>")
-                    var imgURL = results[i].images.original.url
-                    var showImage = image.attr("src", imgURL)
+                // for (i = 0; i < results.length; i++) {
+                //     var showDiv = $("<div>");
+                //     var rating = $("<p>").text("Rating: " + results[i].rating)
+                //     var image = $("<img>")
+                //     var gif = $("<img>")
+                //     var imgURL = results[i].images.fixed_height_still.url
+                //     var gifURL = results[i].images.fixed_height.url
+                //     image.attr("src", imgURL)
+                //     image.attr("data-animate", gifURL)
+                //     image.attr("data-still", imgURL)
+                //     image.attr("data-state", "still")
 
-                    showDiv.append(showImage)
-                    showDiv.append(rating)
-                    $(".show-gifs").prepend(showDiv)
-                }
+                //     image.on("click", function () {
+                //         console.log(this)
+                //         if ($(this).attr("data-state") === "still") {
+                //             $(this).attr("src", $(this).attr("data-animate"));
+                //             $(this).attr("data-state", "animate");
+                //         } else {
+                //             $(this).attr("src", $(this).attr("data-still"));
+                //             $(this).attr("data-state", "still")
+                //         }
+                //     })
+                //     showDiv.append(image)
+                //     showDiv.append(rating)
+                //     $(".show-gifs").prepend(showDiv)
+                // }
             })
         })
-
 
     </script>
 </body>
