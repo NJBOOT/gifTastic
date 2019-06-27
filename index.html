@@ -18,7 +18,7 @@
         <input type="text" id="search-field">
         <input id="find-giphy" class="btn-primary" type="submit" value="giphy Search">
         <div class="show-buttons"></div>
-        <div class="show-gifs col-3"></div>
+        <div class="show-gifs row"></div>
 
     </div>
 
@@ -57,6 +57,7 @@
                         image.attr("data-animate", gifURL)
                         image.attr("data-still", imgURL)
                         image.attr("data-state", "still")
+                        showDiv.addClass("col-4")
 
                         image.on("click", function () {
                             console.log(this)
@@ -110,6 +111,7 @@
                             image.attr("data-animate", gifURL)
                             image.attr("data-still", imgURL)
                             image.attr("data-state", "still")
+                            showDiv.addClass("col-4")
 
                             image.on("click", function () {
                                 console.log(this)
